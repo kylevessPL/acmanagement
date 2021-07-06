@@ -1,12 +1,20 @@
 package pl.piasta.acmanagement.api.customers.model;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import pl.piasta.acmanagement.domain.customers.model.DocumentType;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
-public class AddCustomerRequest implements Serializable {
+@NoArgsConstructor
+@Getter
+@Setter
+public class UpdateCustomerRequest implements Serializable {
 
     @NotBlank
     @Size(min = 2, max = 50)

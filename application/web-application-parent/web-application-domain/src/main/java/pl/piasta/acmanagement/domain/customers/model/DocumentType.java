@@ -1,4 +1,4 @@
-package pl.piasta.acmanagement.api.customers.model;
+package pl.piasta.acmanagement.domain.customers.model;
 
 public enum DocumentType {
 

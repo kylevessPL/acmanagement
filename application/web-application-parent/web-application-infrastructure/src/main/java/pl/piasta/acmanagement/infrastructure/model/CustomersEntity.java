@@ -2,9 +2,12 @@ package pl.piasta.acmanagement.infrastructure.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import pl.piasta.acmanagement.domain.customers.model.DocumentType;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Objects;
@@ -44,7 +47,8 @@ public class CustomersEntity {
     private String email;
 
     @Column(name = "DOCUMENT_TYPE", nullable = false, length = 10)
-    private String documentType;
+    @Enumerated(EnumType.STRING)
+    private DocumentType documentType;
 
     @Column(name = "DOCUMENT_ID", nullable = false, length = 10)
     private String documentId;
