@@ -4,7 +4,11 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.0.xsd">
 
-    <include file="db.changelog-1.0.xml" relativeToChangelogFile="true" />
-    <include file="db.changelog-2.0.xml" relativeToChangelogFile="true" />
+    <changeSet author="geekon" id="2.0-1">
+        <modifyDataType
+                tableName="customers"
+                columnName="house_number"
+                newDataType="VARCHAR(10)"/>
+    </changeSet>
 
 </databaseChangeLog>

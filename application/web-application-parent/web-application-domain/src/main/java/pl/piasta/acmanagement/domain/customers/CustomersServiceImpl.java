@@ -17,11 +17,11 @@ public class CustomersServiceImpl implements CustomersService {
 
     @Override
     @Transactional
-    public void addCustomer(Customer customer) {
+    public Long addCustomer(Customer customer) {
         if (customersRepository.existsByDocumentId(customer.getDocumentId())) {
             throw new MyException(ErrorCode.CUSTOMER_ALREADY_EXISTS);
         }
-        customersRepository.add(customer);
+        return customersRepository.add(customer);
     }
 
     @Override

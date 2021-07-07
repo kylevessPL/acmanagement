@@ -7,6 +7,7 @@ import pl.piasta.acmanagement.domain.customers.model.DocumentType;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -51,7 +52,7 @@ public class UpdateCustomerRequest implements Serializable {
     @Email
     private String email;
 
-    @NotBlank
+    @NotNull
     private DocumentType documentType;
 
     @NotBlank

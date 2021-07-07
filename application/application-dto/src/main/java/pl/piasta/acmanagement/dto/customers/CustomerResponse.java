@@ -1,8 +1,10 @@
 package pl.piasta.acmanagement.dto.customers;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
+@Getter
 public final class CustomerResponse {
 
     private final String firstName;

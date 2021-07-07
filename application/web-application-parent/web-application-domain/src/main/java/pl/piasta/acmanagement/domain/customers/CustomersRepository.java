@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface CustomersRepository {
 
-    void add(Customer customer);
+    Long add(Customer customer);
     boolean update(Long id, Customer customer);
     boolean existsByDocumentId(String documentId);
     Optional<Customer> get(Long id);

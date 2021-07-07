@@ -21,10 +21,10 @@ public class CustomersRepositoryImpl implements CustomersRepository {
 
     @Override
     @Transactional
-    public void add(Customer customer) {
+    public Long add(Customer customer) {
         CustomersEntity entity = new CustomersEntity();
         updateEntity(entity, customer);
-        dao.save(entity);
+        return dao.save(entity).getId();
     }
 
     @Override
@@ -66,7 +66,7 @@ public class CustomersRepositoryImpl implements CustomersRepository {
         entity.setZipCode(customer.getZipCode());
         entity.setPhoneNumber(customer.getPhoneNumber());
         entity.setEmail(customer.getEmail());
-        entity.setDocumentType(entity.getDocumentType());
+        entity.setDocumentType(customer.getDocumentType());
         entity.setDocumentId(customer.getDocumentId());
     }
 }
