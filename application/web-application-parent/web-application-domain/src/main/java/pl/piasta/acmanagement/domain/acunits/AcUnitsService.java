@@ -1,4 +1,6 @@
-package pl.piasta.acmanagement.domain.acunits.model;
+package pl.piasta.acmanagement.domain.acunits;
+
+import pl.piasta.acmanagement.domain.acunits.model.AcUnit;
 
 import java.util.List;
 

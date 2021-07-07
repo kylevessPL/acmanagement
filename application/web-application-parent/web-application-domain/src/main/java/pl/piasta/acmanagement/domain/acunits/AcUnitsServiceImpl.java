@@ -1,8 +1,11 @@
-package pl.piasta.acmanagement.domain.acunits.model;
+package pl.piasta.acmanagement.domain.acunits;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.piasta.acmanagement.domain.acunits.AcUnitsRepository;
+import pl.piasta.acmanagement.domain.acunits.AcUnitsService;
+import pl.piasta.acmanagement.domain.acunits.model.AcUnit;
 import pl.piasta.acmanagement.domain.misc.ErrorCode;
 import pl.piasta.acmanagement.domain.misc.MyException;
 

@@ -17,7 +17,7 @@ import pl.piasta.acmanagement.api.mapper.AcUnitMapper;
 import pl.piasta.acmanagement.api.misc.JsonPatchHandler;
 import pl.piasta.acmanagement.api.misc.ResourceCreatedResponse;
 import pl.piasta.acmanagement.domain.acunits.model.AcUnit;
-import pl.piasta.acmanagement.domain.acunits.model.AcUnitsService;
+import pl.piasta.acmanagement.domain.acunits.AcUnitsService;
 import pl.piasta.acmanagement.dto.acunits.AcUnitResponse;
 
 import javax.json.JsonPatch;
