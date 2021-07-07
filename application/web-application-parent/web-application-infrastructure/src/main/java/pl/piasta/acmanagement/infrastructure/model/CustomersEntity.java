@@ -1,5 +1,6 @@
 package pl.piasta.acmanagement.infrastructure.model;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import pl.piasta.acmanagement.domain.customers.model.DocumentType;
@@ -12,17 +13,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.util.Objects;
 
 @Entity
 @Table(name = "CUSTOMERS")
 @Getter
 @Setter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class CustomersEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
+    @EqualsAndHashCode.Include
     private Long id;
 
     @Column(name = "FIRST_NAME", nullable = false, length = 50)
@@ -55,17 +57,4 @@ public class CustomersEntity {
 
     @Column(name = "DOCUMENT_ID", nullable = false, length = 10)
     private String documentId;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CustomersEntity that = (CustomersEntity) o;
-        return Objects.equals(id, that.id) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(streetName, that.streetName) && Objects.equals(houseNumber, that.houseNumber) && Objects.equals(zipCode, that.zipCode) && Objects.equals(city, that.city) && Objects.equals(phoneNumber, that.phoneNumber) && Objects.equals(email, that.email) && Objects.equals(documentType, that.documentType) && Objects.equals(documentId, that.documentId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, firstName, lastName, streetName, houseNumber, zipCode, city, phoneNumber, email, documentType, documentId);
-    }
 }
