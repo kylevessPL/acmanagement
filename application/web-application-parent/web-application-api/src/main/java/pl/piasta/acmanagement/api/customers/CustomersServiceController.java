@@ -50,12 +50,12 @@ public class CustomersServiceController {
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public CustomerResponse getCustomer(@PathVariable @Min(1) Long id) {
         Customer customer = service.getCustomerById(id);
-        return mapper.mapToCustomerResponse(customer);
+        return mapper.mapToResponse(customer);
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<CustomerResponse> getAllCustomers() {
         List<Customer> customerList = service.getAllCustomers();
-        return mapper.mapToCustomerResponseList(customerList);
+        return mapper.mapToResponseList(customerList);
     }
 }

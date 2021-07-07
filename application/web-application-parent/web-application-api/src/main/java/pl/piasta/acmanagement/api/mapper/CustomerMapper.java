@@ -11,6 +11,6 @@ import java.util.List;
 public interface CustomerMapper {
 
     Customer mapToCustomer(UpdateCustomerRequest request);
-    CustomerResponse mapToCustomerResponse(Customer customer);
-    List<CustomerResponse> mapToCustomerResponseList(List<Customer> customerList);
+    CustomerResponse mapToResponse(Customer customer);
+    List<CustomerResponse> mapToResponseList(List<Customer> customerList);
 }

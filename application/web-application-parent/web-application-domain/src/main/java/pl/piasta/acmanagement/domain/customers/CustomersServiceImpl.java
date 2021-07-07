@@ -35,7 +35,8 @@ public class CustomersServiceImpl implements CustomersService {
     @Override
     @Transactional(readOnly = true)
     public Customer getCustomerById(Long id) {
-        return customersRepository.get(id).orElseThrow(() -> new MyException(ErrorCode.CUSTOMER_NOT_EXISTS));
+        return customersRepository.get(id)
+                .orElseThrow(() -> new MyException(ErrorCode.CUSTOMER_NOT_EXISTS));
     }
 
     @Override
