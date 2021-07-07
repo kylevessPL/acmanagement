@@ -24,6 +24,7 @@ public class AcUnitsEntityMapper {
 
     private AcUnit mapToAcUnit(AcUnitsEntity acUnitsEntity) {
         return new AcUnit(
+                acUnitsEntity.getId(),
                 acUnitsEntity.getManufacturer(),
                 acUnitsEntity.getProductName(),
                 acUnitsEntity.getVoltage(),

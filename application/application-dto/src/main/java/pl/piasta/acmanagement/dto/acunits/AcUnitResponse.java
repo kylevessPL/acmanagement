@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public final class AcUnitResponse {
 
+    private final Long id;
     private final String manufacturer;
     private final String productName;
     private final Integer voltage;

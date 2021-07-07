@@ -1,14 +1,17 @@
 package pl.piasta.acmanagement.domain.acunits.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Getter
-public final class AcUnit {
+@Setter
+public class AcUnit {
 
-    private final String manufacturer;
-    private final String productName;
-    private final Integer voltage;
-    private final Integer current;
+    private Long id;
+    private String manufacturer;
+    private String productName;
+    private Integer voltage;
+    private Integer current;
 }

@@ -13,7 +13,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Getter
 @Setter
-public class AddUnitRequest implements Serializable {
+public class UpdateUnitRequest implements Serializable {
 
     @NotBlank
     @Size(min = 2, max = 100)

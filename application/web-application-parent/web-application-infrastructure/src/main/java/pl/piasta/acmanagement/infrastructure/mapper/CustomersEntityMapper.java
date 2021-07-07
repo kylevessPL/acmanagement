@@ -24,6 +24,7 @@ public class CustomersEntityMapper {
 
     private Customer mapToCustomer(CustomersEntity customersEntity) {
         return new Customer(
+                customersEntity.getId(),
                 customersEntity.getFirstName(),
                 customersEntity.getLastName(),
                 customersEntity.getStreetName(),

@@ -21,6 +21,12 @@ public class AcUnitsServiceImpl implements AcUnitsService {
     }
 
     @Override
+    @Transactional
+    public void updateUnit(AcUnit unit) {
+        acUnitsRepository.update(unit);
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public AcUnit getUnitById(Long id) {
         return acUnitsRepository.get(id)

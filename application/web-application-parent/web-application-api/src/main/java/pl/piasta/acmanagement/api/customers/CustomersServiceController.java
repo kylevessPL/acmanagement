@@ -24,7 +24,7 @@ import javax.validation.constraints.Min;
 import java.util.List;
 
 @RestController
-@RequestMapping("/customers")
+@RequestMapping("/api/v1/customers")
 @Validated
 @RequiredArgsConstructor
 public class CustomersServiceController {
@@ -32,7 +32,7 @@ public class CustomersServiceController {
     private final CustomersService service;
     private final CustomerMapper mapper;
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResourceCreatedResponse addCustomer(@RequestBody @Valid UpdateCustomerRequest request) {
         Customer customer = mapper.mapToCustomer(request);

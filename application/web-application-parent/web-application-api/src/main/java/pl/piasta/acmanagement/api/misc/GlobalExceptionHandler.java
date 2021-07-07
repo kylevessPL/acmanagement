@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import pl.piasta.acmanagement.domain.misc.ErrorCode;
 import pl.piasta.acmanagement.domain.misc.MyException;
 
+import javax.json.JsonException;
 import javax.validation.ConstraintViolationException;
 
 @ControllerAdvice
@@ -35,7 +36,8 @@ public final class GlobalExceptionHandler extends ResponseEntityExceptionHandler
     @ExceptionHandler(value = {
             MethodArgumentTypeMismatchException.class,
             ConstraintViolationException.class,
-            IllegalArgumentException.class
+            IllegalArgumentException.class,
+            JsonException.class
     })
     protected ResponseEntity<Object> handleValidationError(Exception ex) {
         HttpStatus status = HttpStatus.BAD_REQUEST;

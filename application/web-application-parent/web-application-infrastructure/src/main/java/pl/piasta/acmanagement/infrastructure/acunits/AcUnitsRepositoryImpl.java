@@ -23,8 +23,16 @@ public class AcUnitsRepositoryImpl implements AcUnitsRepository {
     @Transactional
     public Long add(AcUnit unit) {
         AcUnitsEntity entity = new AcUnitsEntity();
-        updateEntity(entity, unit);
+        createEntity(entity, unit);
         return dao.save(entity).getId();
+    }
+
+    @Override
+    @Transactional
+    public void update(AcUnit unit) {
+        AcUnitsEntity entity = new AcUnitsEntity();
+        createEntity(entity, unit);
+        dao.save(entity);
     }
 
     @Override
@@ -41,7 +49,8 @@ public class AcUnitsRepositoryImpl implements AcUnitsRepository {
         return mapper.mapToAcUnitList(entityList);
     }
 
-    void updateEntity(AcUnitsEntity entity, AcUnit unit) {
+    void createEntity(AcUnitsEntity entity, AcUnit unit) {
+        entity.setId(unit.getId());
         entity.setManufacturer(unit.getManufacturer());
         entity.setProductName(unit.getProductName());
         entity.setCurrent(unit.getCurrent());
