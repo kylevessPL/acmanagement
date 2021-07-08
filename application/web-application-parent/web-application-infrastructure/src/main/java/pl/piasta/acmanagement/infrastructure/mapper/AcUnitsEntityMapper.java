@@ -22,7 +22,7 @@ public class AcUnitsEntityMapper {
                 .collect(Collectors.toList());
     }
 
-    private AcUnit mapToAcUnit(AcUnitsEntity acUnitsEntity) {
+    public AcUnit mapToAcUnit(AcUnitsEntity acUnitsEntity) {
         return new AcUnit(
                 acUnitsEntity.getId(),
                 acUnitsEntity.getManufacturer(),

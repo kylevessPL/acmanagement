@@ -22,7 +22,7 @@ public class CustomersEntityMapper {
                 .collect(Collectors.toList());
     }
 
-    private Customer mapToCustomer(CustomersEntity customersEntity) {
+    public Customer mapToCustomer(CustomersEntity customersEntity) {
         return new Customer(
                 customersEntity.getId(),
                 customersEntity.getFirstName(),

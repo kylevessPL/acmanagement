@@ -16,8 +16,8 @@ import pl.piasta.acmanagement.api.acunits.model.UpdateUnitRequest;
 import pl.piasta.acmanagement.api.mapper.AcUnitMapper;
 import pl.piasta.acmanagement.api.misc.JsonPatchHandler;
 import pl.piasta.acmanagement.api.misc.ResourceCreatedResponse;
-import pl.piasta.acmanagement.domain.acunits.model.AcUnit;
 import pl.piasta.acmanagement.domain.acunits.AcUnitsService;
+import pl.piasta.acmanagement.domain.acunits.model.AcUnit;
 import pl.piasta.acmanagement.dto.acunits.AcUnitResponse;
 
 import javax.json.JsonPatch;
@@ -53,7 +53,6 @@ public class AcUnitsServiceController {
         mapper.update(request, unit);
         service.updateUnit(unit);
     }
-
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public AcUnitResponse getUnit(@PathVariable @Min(1) Long id) {

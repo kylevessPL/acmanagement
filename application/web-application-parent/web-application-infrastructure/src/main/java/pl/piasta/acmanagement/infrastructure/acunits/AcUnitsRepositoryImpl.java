@@ -3,8 +3,8 @@ package pl.piasta.acmanagement.infrastructure.acunits;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import pl.piasta.acmanagement.domain.acunits.model.AcUnit;
 import pl.piasta.acmanagement.domain.acunits.AcUnitsRepository;
+import pl.piasta.acmanagement.domain.acunits.model.AcUnit;
 import pl.piasta.acmanagement.infrastructure.dao.AcUnitsDao;
 import pl.piasta.acmanagement.infrastructure.mapper.AcUnitsEntityMapper;
 import pl.piasta.acmanagement.infrastructure.model.AcUnitsEntity;
@@ -23,7 +23,7 @@ public class AcUnitsRepositoryImpl implements AcUnitsRepository {
     @Transactional
     public Long add(AcUnit unit) {
         AcUnitsEntity entity = new AcUnitsEntity();
-        createEntity(entity, unit);
+        updateEntity(entity, unit);
         return dao.save(entity).getId();
     }
 
@@ -31,7 +31,7 @@ public class AcUnitsRepositoryImpl implements AcUnitsRepository {
     @Transactional
     public void update(AcUnit unit) {
         AcUnitsEntity entity = new AcUnitsEntity();
-        createEntity(entity, unit);
+        updateEntity(entity, unit);
         dao.save(entity);
     }
 
@@ -49,7 +49,7 @@ public class AcUnitsRepositoryImpl implements AcUnitsRepository {
         return mapper.mapToAcUnitList(entityList);
     }
 
-    void createEntity(AcUnitsEntity entity, AcUnit unit) {
+    void updateEntity(AcUnitsEntity entity, AcUnit unit) {
         entity.setId(unit.getId());
         entity.setManufacturer(unit.getManufacturer());
         entity.setProductName(unit.getProductName());

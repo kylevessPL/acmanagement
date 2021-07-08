@@ -14,7 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "AC_SYSTEMS")
@@ -34,7 +34,7 @@ public class AcSystemsEntity {
     private AcUnitsEntity unit;
 
     @Column(name = "NEXT_MAINTAINANCE", nullable = false)
-    private Instant nextMaintainance;
+    private LocalDateTime nextMaintainance;
 
     @Column(name = "NOTIFICATIONS", nullable = false)
     private boolean notifications;
