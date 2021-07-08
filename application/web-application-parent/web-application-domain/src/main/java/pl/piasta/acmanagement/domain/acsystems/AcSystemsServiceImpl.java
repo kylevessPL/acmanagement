@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.piasta.acmanagement.domain.acsystems.model.AcSystem;
 import pl.piasta.acmanagement.domain.acsystems.model.AcSystemFull;
+import pl.piasta.acmanagement.domain.acunits.AcUnitsRepository;
+import pl.piasta.acmanagement.domain.customers.CustomersRepository;
 import pl.piasta.acmanagement.domain.misc.ErrorCode;
 import pl.piasta.acmanagement.domain.misc.MyException;
 
@@ -16,10 +18,18 @@ import java.util.List;
 public class AcSystemsServiceImpl implements AcSystemsService {
 
     private final AcSystemsRepository acSystemsRepository;
+    private final AcUnitsRepository acUnitsRepository;
+    private final CustomersRepository customersRepository;
 
     @Override
     @Transactional
     public Long addSystem(AcSystem system) {
+        if (!acUnitsRepository.exists(system.getUnitId())) {
+            throw new MyException(ErrorCode.UNIT_NOT_EXISTS);
+        }
+        if (!customersRepository.exists(system.getCustomerId())) {
+            throw new MyException(ErrorCode.CUSTOMER_NOT_EXISTS);
+        }
         return acSystemsRepository.add(system);
     }
 

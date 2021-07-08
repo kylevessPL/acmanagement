@@ -37,6 +37,12 @@ public class AcUnitsRepositoryImpl implements AcUnitsRepository {
 
     @Override
     @Transactional(readOnly = true)
+    public boolean exists(Long id) {
+        return dao.existsById(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public Optional<AcUnit> get(Long id) {
         Optional<AcUnitsEntity> entity = dao.findById(id);
         return mapper.mapToAcUnitOptional(entity);

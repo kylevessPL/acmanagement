@@ -39,6 +39,12 @@ public class CustomersRepositoryImpl implements CustomersRepository {
 
     @Override
     @Transactional(readOnly = true)
+    public boolean exists(Long id) {
+        return dao.existsById(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public boolean existsByDocumentId(String documentId) {
         return dao.existsByDocumentId(documentId);
     }

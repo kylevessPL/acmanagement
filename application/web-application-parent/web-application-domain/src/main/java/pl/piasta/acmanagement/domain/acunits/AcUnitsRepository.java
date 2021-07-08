@@ -9,6 +9,7 @@ public interface AcUnitsRepository {
 
     Long add(AcUnit unit);
     void update(AcUnit unit);
+    boolean exists(Long id);
     Optional<AcUnit> get(Long id);
     List<AcUnit> getAll();
 }
