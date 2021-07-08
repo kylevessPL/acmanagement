@@ -1,5 +1,6 @@
 package pl.piasta.acmanagement.domain.acsystems.model;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import pl.piasta.acmanagement.domain.acunits.model.AcUnit;
 import pl.piasta.acmanagement.domain.customers.model.Customer;
@@ -7,6 +8,7 @@ import pl.piasta.acmanagement.domain.customers.model.Customer;
 import java.time.LocalDateTime;
 
 @RequiredArgsConstructor
+@Getter
 public final class AcSystemFull {
 
     private final Long id;

@@ -1,23 +1,21 @@
 package pl.piasta.acmanagement.domain.customers.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.RequiredArgsConstructor;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Getter
-@Setter
-public class Customer {
+public final class Customer {
 
-    private Long id;
-    private String firstName;
-    private String lastName;
-    private String streetName;
-    private String houseNumber;
-    private String zipCode;
-    private String city;
-    private String phoneNumber;
-    private String email;
-    private DocumentType documentType;
-    private String documentId;
+    private final Long id;
+    private final String firstName;
+    private final String lastName;
+    private final String streetName;
+    private final String houseNumber;
+    private final String zipCode;
+    private final String city;
+    private final String phoneNumber;
+    private final String email;
+    private final DocumentType documentType;
+    private final String documentId;
 }

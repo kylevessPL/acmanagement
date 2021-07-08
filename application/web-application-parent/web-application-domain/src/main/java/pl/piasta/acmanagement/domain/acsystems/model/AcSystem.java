@@ -1,19 +1,17 @@
 package pl.piasta.acmanagement.domain.acsystems.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Getter
-@Setter
-public class AcSystem {
+public final class AcSystem {
 
-    private Long id;
-    private Long unitId;
-    private LocalDateTime nextMaintainance;
-    private boolean notified;
-    private Long customerId;
+    private final Long id;
+    private final Long unitId;
+    private final LocalDateTime nextMaintainance;
+    private final boolean notified;
+    private final Long customerId;
 }
