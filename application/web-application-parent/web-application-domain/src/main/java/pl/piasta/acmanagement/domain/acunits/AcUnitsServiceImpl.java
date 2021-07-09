@@ -17,14 +17,8 @@ public class AcUnitsServiceImpl implements AcUnitsService {
 
     @Override
     @Transactional
-    public Long addUnit(AcUnit unit) {
+    public Long updateUnit(AcUnit unit) {
         return acUnitsRepository.add(unit);
-    }
-
-    @Override
-    @Transactional
-    public void updateUnit(AcUnit unit) {
-        acUnitsRepository.update(unit);
     }
 
     @Override

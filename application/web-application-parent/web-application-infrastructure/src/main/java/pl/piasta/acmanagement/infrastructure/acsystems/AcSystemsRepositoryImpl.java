@@ -1,12 +1,12 @@
 package pl.piasta.acmanagement.infrastructure.acsystems;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import pl.piasta.acmanagement.domain.acsystems.AcSystemsRepository;
 import pl.piasta.acmanagement.domain.acsystems.model.AcSystem;
 import pl.piasta.acmanagement.domain.acsystems.model.AcSystemFull;
+import pl.piasta.acmanagement.domain.acsystems.model.JobDetails;
 import pl.piasta.acmanagement.infrastructure.dao.AcSystemsDao;
 import pl.piasta.acmanagement.infrastructure.mapper.AcSystemsEntityMapper;
 import pl.piasta.acmanagement.infrastructure.model.AcSystemsEntity;
@@ -28,41 +28,37 @@ public class AcSystemsRepositoryImpl implements AcSystemsRepository {
 
     @Override
     @Transactional
-    public Long add(AcSystem unit) {
+    public Long add(AcSystem unit, String jobKey) {
         AcSystemsEntity entity = new AcSystemsEntity();
-        updateEntity(entity, unit);
+        updateEntity(entity, unit, jobKey);
         return dao.save(entity).getId();
     }
 
     @Override
     @Transactional
-    public boolean remove(Long id) {
-        try {
-            dao.deleteById(id);
-        } catch (EmptyResultDataAccessException ex) {
-            return false;
-        }
-        return true;
+    public Optional<String> remove(Long id) {
+        return dao.findById(id).map(entity -> {
+            dao.delete(entity);
+            return entity.getJobKey();
+        });
     }
 
     @Override
     @Transactional
-    public boolean updateNextMaintainance(Long id, LocalDateTime date) {
+    public Optional<JobDetails> updateNextMaintainance(Long id, LocalDateTime date) {
         return dao.findById(id).map(entity -> {
             entity.setNextMaintainance(date);
-            dao.save(entity);
-            return true;
-        }).orElse(false);
+            return mapper.mapToJobDetails(entity);
+        });
     }
 
     @Override
     @Transactional
-    public boolean updateNotificationsStatus(Long id, boolean enabled) {
+    public Optional<JobDetails> updateNotificationsStatus(Long id, boolean enabled) {
         return dao.findById(id).map(entity -> {
             entity.setNotifications(enabled);
-            dao.save(entity);
-            return true;
-        }).orElse(false);
+            return mapper.mapToJobDetails(entity);
+        });
     }
 
     @Override
@@ -79,11 +75,12 @@ public class AcSystemsRepositoryImpl implements AcSystemsRepository {
         return mapper.mapToAcSystemList(entityList);
     }
 
-    void updateEntity(AcSystemsEntity entity, AcSystem system) {
+    void updateEntity(AcSystemsEntity entity, AcSystem system, String jobKey) {
         entity.setId(system.getId());
         entity.setNextMaintainance(system.getNextMaintainance());
         entity.setNotifications(system.isNotified());
         entity.setCustomer(entityManager.find(CustomersEntity.class, system.getCustomerId()));
         entity.setUnit(entityManager.find(AcUnitsEntity.class, system.getUnitId()));
+        entity.setJobKey(jobKey);
     }
 }

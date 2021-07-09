@@ -9,7 +9,6 @@ public interface CustomersRepository {
 
     Long add(Customer customer);
     boolean update(Long id, Customer customer);
-    boolean exists(Long id);
     boolean existsByDocumentId(String documentId);
     Optional<Customer> get(Long id);
     List<Customer> getAll();

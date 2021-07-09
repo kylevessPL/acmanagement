@@ -42,4 +42,7 @@ public class AcSystemsEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CUSTOMER_ID", nullable = false)
     CustomersEntity customer;
+
+    @Column(name = "JOB_KEY", nullable = false)
+    private String jobKey;
 }

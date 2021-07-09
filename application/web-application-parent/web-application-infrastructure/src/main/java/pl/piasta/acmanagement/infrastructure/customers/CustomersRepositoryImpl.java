@@ -32,15 +32,8 @@ public class CustomersRepositoryImpl implements CustomersRepository {
     public boolean update(Long id, Customer customer) {
         return dao.findById(id).map(entity -> {
             updateEntity(entity, customer);
-            dao.save(entity);
             return true;
         }).orElse(false);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public boolean exists(Long id) {
-        return dao.existsById(id);
     }
 
     @Override

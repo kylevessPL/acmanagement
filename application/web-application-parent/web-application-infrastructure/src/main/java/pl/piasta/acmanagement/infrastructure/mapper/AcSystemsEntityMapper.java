@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import pl.piasta.acmanagement.domain.acsystems.model.AcSystem;
 import pl.piasta.acmanagement.domain.acsystems.model.AcSystemFull;
+import pl.piasta.acmanagement.domain.acsystems.model.JobDetails;
 import pl.piasta.acmanagement.infrastructure.model.AcSystemsEntity;
 
 import java.util.List;
@@ -26,6 +27,10 @@ public class AcSystemsEntityMapper {
                 .stream()
                 .map(this::mapToAcSystem)
                 .collect(Collectors.toList());
+    }
+
+    public JobDetails mapToJobDetails(AcSystemsEntity acSystemsEntity) {
+        return new JobDetails(acSystemsEntity.getJobKey(), acSystemsEntity.getNextMaintainance(), acSystemsEntity.isNotifications());
     }
 
     private AcSystem mapToAcSystem(AcSystemsEntity acSystemsEntity) {

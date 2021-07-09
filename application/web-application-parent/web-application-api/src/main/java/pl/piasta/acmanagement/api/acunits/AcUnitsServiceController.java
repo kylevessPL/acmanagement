@@ -39,7 +39,7 @@ public class AcUnitsServiceController {
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResourceCreatedResponse addUnit(@RequestBody @Valid UpdateUnitRequest request) {
         AcUnit unit = mapper.mapToAcUnit(request);
-        Long id = service.addUnit(unit);
+        Long id = service.updateUnit(unit);
         return new ResourceCreatedResponse(id);
     }
 

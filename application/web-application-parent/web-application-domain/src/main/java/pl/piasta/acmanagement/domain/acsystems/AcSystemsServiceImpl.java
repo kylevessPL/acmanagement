@@ -5,12 +5,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.piasta.acmanagement.domain.acsystems.model.AcSystem;
 import pl.piasta.acmanagement.domain.acsystems.model.AcSystemFull;
+import pl.piasta.acmanagement.domain.acsystems.model.JobDetails;
+import pl.piasta.acmanagement.domain.acsystems.quartz.EmailDetails;
+import pl.piasta.acmanagement.domain.acsystems.quartz.EmailScheduler;
 import pl.piasta.acmanagement.domain.acunits.AcUnitsRepository;
 import pl.piasta.acmanagement.domain.customers.CustomersRepository;
+import pl.piasta.acmanagement.domain.customers.model.Customer;
 import pl.piasta.acmanagement.domain.misc.ErrorCode;
 import pl.piasta.acmanagement.domain.misc.MyException;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 
 @Service
@@ -20,6 +25,7 @@ public class AcSystemsServiceImpl implements AcSystemsService {
     private final AcSystemsRepository acSystemsRepository;
     private final AcUnitsRepository acUnitsRepository;
     private final CustomersRepository customersRepository;
+    private final EmailScheduler emailScheduler;
 
     @Override
     @Transactional
@@ -27,18 +33,22 @@ public class AcSystemsServiceImpl implements AcSystemsService {
         if (!acUnitsRepository.exists(system.getUnitId())) {
             throw new MyException(ErrorCode.UNIT_NOT_EXISTS);
         }
-        if (!customersRepository.exists(system.getCustomerId())) {
-            throw new MyException(ErrorCode.CUSTOMER_NOT_EXISTS);
+        String email = customersRepository.get(system.getCustomerId())
+                .map(Customer::getEmail)
+                .orElseThrow(() -> new MyException(ErrorCode.CUSTOMER_NOT_EXISTS));
+        EmailDetails emailDetails = createEmailDetails(email);
+        String jobKey = emailScheduler.add(emailDetails);
+        if (system.isNotified()) {
+            emailScheduler.schedule(jobKey, system.getNextMaintainance().toInstant(ZoneOffset.UTC));
         }
-        return acSystemsRepository.add(system);
+        return acSystemsRepository.add(system, jobKey);
     }
 
     @Override
     @Transactional
     public void removeSystemById(Long id) {
-        if (!acSystemsRepository.remove(id)) {
-            throw new MyException(ErrorCode.SYSTEM_NOT_EXISTS);
-        }
+        acSystemsRepository.remove(id)
+                .ifPresentOrElse(emailScheduler::cancel, () -> { throw new MyException(ErrorCode.SYSTEM_NOT_EXISTS); });
     }
 
     @Override
@@ -57,16 +67,31 @@ public class AcSystemsServiceImpl implements AcSystemsService {
     @Override
     @Transactional
     public void setNextMaintainance(Long id, LocalDateTime date) {
-        if (!acSystemsRepository.updateNextMaintainance(id, date)) {
-            throw new MyException(ErrorCode.SYSTEM_NOT_EXISTS);
-        }
+        acSystemsRepository.updateNextMaintainance(id, date)
+                .ifPresentOrElse(this::scheduleEmail, () -> { throw new MyException(ErrorCode.SYSTEM_NOT_EXISTS); });
     }
 
     @Override
     @Transactional
     public void setNotifications(Long id, boolean enabled) {
-        if (!acSystemsRepository.updateNotificationsStatus(id, enabled)) {
-            throw new MyException(ErrorCode.SYSTEM_NOT_EXISTS);
+        acSystemsRepository.updateNotificationsStatus(id, enabled)
+                .ifPresentOrElse(this::scheduleEmail, () -> { throw new MyException(ErrorCode.SYSTEM_NOT_EXISTS); });
+    }
+
+    private void scheduleEmail(JobDetails jobDetails) {
+        if (jobDetails.isNotified()) {
+            emailScheduler.schedule(jobDetails.getJobKey(), jobDetails.getNextMaintainance().toInstant(ZoneOffset.UTC));
+        } else {
+            emailScheduler.unschedule(jobDetails.getJobKey());
         }
+    }
+
+    private EmailDetails createEmailDetails(String email) {
+        return new EmailDetails(
+                email,
+                "ACManagement - maintainance reminder",
+                "<h1>Hello!</h1><br>" +
+                        "Just a quick reminder - it's week until the scheduled AC system maintainance!<br>" +
+                        "Gretings.");
     }
 }

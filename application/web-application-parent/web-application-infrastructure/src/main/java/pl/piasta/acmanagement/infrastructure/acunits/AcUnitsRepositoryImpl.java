@@ -28,14 +28,6 @@ public class AcUnitsRepositoryImpl implements AcUnitsRepository {
     }
 
     @Override
-    @Transactional
-    public void update(AcUnit unit) {
-        AcUnitsEntity entity = new AcUnitsEntity();
-        updateEntity(entity, unit);
-        dao.save(entity);
-    }
-
-    @Override
     @Transactional(readOnly = true)
     public boolean exists(Long id) {
         return dao.existsById(id);
