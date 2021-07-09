@@ -79,8 +79,9 @@ public class AcSystemsServiceImpl implements AcSystemsService {
     }
 
     private void scheduleEmail(JobDetails jobDetails) {
-        if (jobDetails.isNotified()) {
-            emailScheduler.schedule(jobDetails.getJobKey(), jobDetails.getNextMaintainance().toInstant(ZoneOffset.UTC));
+        LocalDateTime date = jobDetails.getNextMaintainance();
+        if (jobDetails.isNotified() && date.isBefore(LocalDateTime.now())) {
+            emailScheduler.schedule(jobDetails.getJobKey(), date.toInstant(ZoneOffset.UTC));
         } else {
             emailScheduler.unschedule(jobDetails.getJobKey());
         }
