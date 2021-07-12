@@ -45,7 +45,7 @@ public class AcUnitsServiceController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping(path = "/{id}", consumes = "application/json-patch+json")
-    public void update(@PathVariable @Min(1) Long id, @RequestBody JsonPatch patchDocument) {
+    public void updateUnit(@PathVariable @Min(1) Long id, @RequestBody JsonPatch patchDocument) {
         AcUnitResponse response = mapper.mapToResponse(service.getUnitById(id));
         UpdateUnitRequest request = mapper.mapToRequest(response);
         request = jsonPatchHandler.patch(patchDocument, request, UpdateUnitRequest.class);
