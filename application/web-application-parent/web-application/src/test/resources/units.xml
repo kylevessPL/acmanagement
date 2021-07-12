@@ -9,9 +9,4 @@
               product_name="Product 002"
               voltage="240"
               current="20" />
-    <ac_units id="3"
-              manufacturer="Test Systems Inc."
-              product_name="Product 003"
-              voltage="250"
-              current="25" />
 </dataset>

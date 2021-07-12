@@ -29,7 +29,8 @@ public class AcUnitsServiceTest extends BaseIT {
                 .contentType(ContentType.JSON)
                 .body(new UpdateUnitRequest("Test Systems Inc.", "Product 001", 230, 30))
                 .post(createURLWithPort(AcUnitsEndpoints.BASE))
-                .then().log().all()
+                .then()
+                .log().all()
                 .assertThat()
                 .statusCode(201);
         Table table = new Table(dataSource, "AC_UNITS", null, new String[] { "id" });
@@ -55,12 +56,13 @@ public class AcUnitsServiceTest extends BaseIT {
                 .pathParam("id", 2)
                 .body(jsonPatch.toString())
                 .patch(createURLWithPort(AcUnitsEndpoints.RESOURCE))
-                .then().log().all()
+                .then()
+                .log().all()
                 .assertThat()
                 .statusCode(204);
         Table table = new Table(dataSource, "AC_UNITS", null, new String[] { "id" });
         assertThat(table)
-                .hasNumberOfRows(3)
+                .hasNumberOfRows(2)
                 .row(1)
                 .column("product_name").value().isEqualTo("Updated Product 002")
                 .column("voltage").value().isEqualTo(210);
@@ -75,7 +77,8 @@ public class AcUnitsServiceTest extends BaseIT {
                 .contentType(ContentType.JSON)
                 .pathParam("id", 2)
                 .get(createURLWithPort(AcUnitsEndpoints.RESOURCE))
-                .then().log().all()
+                .then()
+                .log().all()
                 .assertThat()
                 .contentType(ContentType.JSON)
                 .statusCode(200)
@@ -92,9 +95,10 @@ public class AcUnitsServiceTest extends BaseIT {
         given()
                 .log().all()
                 .contentType(ContentType.JSON)
-                .pathParam("id", 4)
+                .pathParam("id", 3)
                 .get(createURLWithPort(AcUnitsEndpoints.RESOURCE))
-                .then().log().all()
+                .then()
+                .log().all()
                 .assertThat()
                 .contentType(ContentType.JSON)
                 .statusCode(400);
@@ -108,11 +112,12 @@ public class AcUnitsServiceTest extends BaseIT {
                 .log().all()
                 .contentType(ContentType.JSON)
                 .get(createURLWithPort(AcUnitsEndpoints.BASE))
-                .then().log().all()
+                .then()
+                .log().all()
                 .assertThat()
                 .contentType(ContentType.JSON)
                 .statusCode(200)
-                .body("size()", is(3));
+                .body("size()", is(2));
     }
 
     @Test
@@ -121,7 +126,8 @@ public class AcUnitsServiceTest extends BaseIT {
                 .log().all()
                 .contentType(ContentType.JSON)
                 .get(createURLWithPort(AcUnitsEndpoints.BASE))
-                .then().log().all()
+                .then()
+                .log().all()
                 .assertThat()
                 .contentType(ContentType.JSON)
                 .statusCode(200)
