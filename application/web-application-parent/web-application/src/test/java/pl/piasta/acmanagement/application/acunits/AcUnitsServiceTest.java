@@ -60,12 +60,12 @@ public class AcUnitsServiceTest extends BaseIT {
                 .log().all()
                 .assertThat()
                 .statusCode(204);
-        Table table = new Table(dataSource, "AC_UNITS", null, new String[] { "id" });
+        Table table = new Table(dataSource, "AC_UNITS", new String[] { "product_name", "voltage" }, null);
         assertThat(table)
                 .hasNumberOfRows(2)
                 .row(1)
-                .column("product_name").value().isEqualTo("Updated Product 002")
-                .column("voltage").value().isEqualTo(210);
+                .column("product_name").value(1).isEqualTo("Updated Product 002")
+                .column("voltage").value(1).isEqualTo(210);
     }
 
     @Test
@@ -95,6 +95,7 @@ public class AcUnitsServiceTest extends BaseIT {
         given()
                 .log().all()
                 .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
                 .pathParam("id", 3)
                 .get(createURLWithPort(AcUnitsEndpoints.RESOURCE))
                 .then()
@@ -111,6 +112,7 @@ public class AcUnitsServiceTest extends BaseIT {
         given()
                 .log().all()
                 .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
                 .get(createURLWithPort(AcUnitsEndpoints.BASE))
                 .then()
                 .log().all()
@@ -125,6 +127,7 @@ public class AcUnitsServiceTest extends BaseIT {
         given()
                 .log().all()
                 .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
                 .get(createURLWithPort(AcUnitsEndpoints.BASE))
                 .then()
                 .log().all()
