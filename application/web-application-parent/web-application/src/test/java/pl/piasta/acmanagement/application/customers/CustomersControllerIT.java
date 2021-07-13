@@ -17,7 +17,7 @@ import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
-public class CustomersServiceTest extends BaseIT {
+public class CustomersControllerIT extends BaseIT {
 
     @Test
     @Transactional
@@ -38,16 +38,35 @@ public class CustomersServiceTest extends BaseIT {
         Table table = new Table(dataSource, "CUSTOMERS", null, new String[] { "id" });
         assertThat(table)
                 .hasNumberOfRows(1)
-                .column("first_name").hasValues("John")
-                .column("last_name").hasValues("Smith")
-                .column("street_name").hasValues("Stratford Park")
-                .column("house_number").hasValues("3513")
-                .column("zip_code").hasValues("47805")
-                .column("city").hasValues("Terre Haute")
-                .column("phone_number").hasValues("+1-202-555-0183")
-                .column("email").hasValues("example@example.com")
-                .column("document_type").hasValues("IDCARD")
-                .column("document_id").hasValues("GDA7394612");
+                .column("first_name").value().isEqualTo("John")
+                .column("last_name").value().isEqualTo("Smith")
+                .column("street_name").value().isEqualTo("Stratford Park")
+                .column("house_number").value().isEqualTo("3513")
+                .column("zip_code").value().isEqualTo("47805")
+                .column("city").value().isEqualTo("Terre Haute")
+                .column("phone_number").value().isEqualTo("+1-202-555-0183")
+                .column("email").value().isEqualTo("example@example.com")
+                .column("document_type").value().isEqualTo("IDCARD")
+                .column("document_id").value().isEqualTo("GDA7394612");
+    }
+
+    @Test
+    @DatabaseSetup(value = "classpath:customers.xml")
+    @DatabaseTearDown(type = DatabaseOperation.DELETE_ALL, value = "classpath:customers.xml")
+    public void addCustomer_Should_Return_400_Bad_Request() {
+        given()
+                .log().all()
+                .contentType(ContentType.JSON)
+                .body(new UpdateCustomerRequest(
+                        "John", "Smith",
+                        "Stratford Park", "3513", "47805", "Terre Haute",
+                        "+1-202-555-0183", "example@example.com",
+                        DocumentType.IDCARD, "GDA7394612"))
+                .post(createURLWithPort(CustomersEndpoints.BASE))
+                .then()
+                .log().all()
+                .assertThat()
+                .statusCode(400);
     }
 
     @Test
@@ -96,14 +115,12 @@ public class CustomersServiceTest extends BaseIT {
     }
 
     @Test
-    @DatabaseSetup(value = "classpath:customers.xml")
-    @DatabaseTearDown(type = DatabaseOperation.DELETE_ALL, value = "classpath:customers.xml")
     public void getCustomer_Should_Return_400_Bad_Request() {
         given()
                 .log().all()
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
-                .pathParam("id", 3)
+                .pathParam("id", 1)
                 .get(createURLWithPort(CustomersEndpoints.RESOURCE))
                 .then()
                 .log().all()

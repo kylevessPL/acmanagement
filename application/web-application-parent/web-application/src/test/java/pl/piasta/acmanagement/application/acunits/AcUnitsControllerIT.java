@@ -19,7 +19,7 @@ import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
-public class AcUnitsServiceTest extends BaseIT {
+public class AcUnitsControllerIT extends BaseIT {
 
     @Test
     @Transactional
@@ -36,10 +36,10 @@ public class AcUnitsServiceTest extends BaseIT {
         Table table = new Table(dataSource, "AC_UNITS", null, new String[] { "id" });
         assertThat(table)
                 .hasNumberOfRows(1)
-                .column("manufacturer").hasValues("Test Systems Inc.")
-                .column("product_name").hasValues("Product 001")
-                .column("voltage").hasValues(230)
-                .column("current").hasValues(30);
+                .column("manufacturer").value().isEqualTo("Test Systems Inc.")
+                .column("product_name").value().isEqualTo("Product 001")
+                .column("voltage").value().isEqualTo(230)
+                .column("current").value().isEqualTo(30);
     }
 
     @Test
@@ -89,14 +89,12 @@ public class AcUnitsServiceTest extends BaseIT {
     }
 
     @Test
-    @DatabaseSetup(value = "classpath:units.xml")
-    @DatabaseTearDown(type = DatabaseOperation.DELETE_ALL, value = "classpath:units.xml")
     public void getUnit_Should_Return_400_Bad_Request() {
         given()
                 .log().all()
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
-                .pathParam("id", 3)
+                .pathParam("id", 1)
                 .get(createURLWithPort(AcUnitsEndpoints.RESOURCE))
                 .then()
                 .log().all()
