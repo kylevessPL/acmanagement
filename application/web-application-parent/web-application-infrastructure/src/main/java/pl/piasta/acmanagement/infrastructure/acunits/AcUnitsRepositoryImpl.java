@@ -48,7 +48,9 @@ public class AcUnitsRepositoryImpl implements AcUnitsRepository {
     }
 
     void updateEntity(AcUnitsEntity entity, AcUnit unit) {
-        entity.setId(unit.getId());
+        if (unit.getId() != null) {
+            entity.setId(unit.getId());
+        }
         entity.setManufacturer(unit.getManufacturer());
         entity.setProductName(unit.getProductName());
         entity.setCurrent(unit.getCurrent());

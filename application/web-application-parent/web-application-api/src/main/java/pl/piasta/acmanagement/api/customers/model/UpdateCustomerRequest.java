@@ -1,5 +1,6 @@
 package pl.piasta.acmanagement.api.customers.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,6 +14,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 public class UpdateCustomerRequest implements Serializable {
@@ -44,7 +46,7 @@ public class UpdateCustomerRequest implements Serializable {
     private String city;
 
     @NotBlank
-    @Pattern(regexp = "^[0-9]+$")
+    @Pattern(regexp = "^\\+[-0-9]+$")
     @Size(min = 7, max = 15)
     private String phoneNumber;
 

@@ -76,7 +76,9 @@ public class AcSystemsRepositoryImpl implements AcSystemsRepository {
     }
 
     void updateEntity(AcSystemsEntity entity, AcSystem system, String jobKey) {
-        entity.setId(system.getId());
+        if (system.getId() != null) {
+            entity.setId(system.getId());
+        }
         entity.setNextMaintainance(system.getNextMaintainance());
         entity.setNotifications(system.isNotified());
         entity.setCustomer(entityManager.find(CustomersEntity.class, system.getCustomerId()));

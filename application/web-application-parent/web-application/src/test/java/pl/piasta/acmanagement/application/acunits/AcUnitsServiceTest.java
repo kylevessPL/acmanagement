@@ -71,7 +71,7 @@ public class AcUnitsServiceTest extends BaseIT {
     @Test
     @DatabaseSetup(value = "classpath:units.xml")
     @DatabaseTearDown(type = DatabaseOperation.DELETE_ALL, value = "classpath:units.xml")
-    public void getUnit_Should_Return_200_Ok_And_Expect_Unit_Response_Object() {
+    public void getUnit_Should_Return_200_Ok_And_Expect_1_Unit_Response_Object() {
         given()
                 .log().all()
                 .contentType(ContentType.JSON)
@@ -108,7 +108,7 @@ public class AcUnitsServiceTest extends BaseIT {
     @Test
     @DatabaseSetup(value = "classpath:units.xml")
     @DatabaseTearDown(type = DatabaseOperation.DELETE_ALL, value = "classpath:units.xml")
-    public void getAllUnits_Should_Return_200_Ok_And_Expect_3_Units_Response_Objects() {
+    public void getAllUnits_Should_Return_200_Ok_And_Expect_3_Unit_Response_Objects() {
         given()
                 .log().all()
                 .contentType(ContentType.JSON)
@@ -123,7 +123,7 @@ public class AcUnitsServiceTest extends BaseIT {
     }
 
     @Test
-    public void getAllUnits_Should_Return_200_Ok_And_Expect_No_Units_Response_Objects() {
+    public void getAllUnits_Should_Return_200_Ok_And_Expect_No_Unit_Response_Objects() {
         given()
                 .log().all()
                 .contentType(ContentType.JSON)

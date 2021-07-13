@@ -57,7 +57,9 @@ public class CustomersRepositoryImpl implements CustomersRepository {
     }
 
     void updateEntity(CustomersEntity entity, Customer customer) {
-        entity.setId(customer.getId());
+        if (customer.getId() != null) {
+            entity.setId(customer.getId());
+        }
         entity.setFirstName(customer.getFirstName());
         entity.setLastName(customer.getLastName());
         entity.setStreetName(customer.getStreetName());
