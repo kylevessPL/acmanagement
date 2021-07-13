@@ -15,6 +15,8 @@ import org.quartz.TriggerKey;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Date;
 import java.util.UUID;
 
@@ -37,14 +39,19 @@ public class EmailScheduler {
         return jobKey;
     }
 
-    public void schedule(String jobKey, Instant date) {
+    public void schedule(String jobKey, LocalDateTime date) {
         try {
             if (scheduler.checkExists(TriggerKey.triggerKey(jobKey, "triggers"))) {
                 scheduler.unscheduleJob(TriggerKey.triggerKey(jobKey, "triggers"));
             }
             JobDetail jobDetail = scheduler.getJobDetail(JobKey.jobKey(jobKey, "jobs"));
-            Trigger trigger = buildJobTrigger(jobDetail, date);
-            scheduler.scheduleJob(trigger);
+            LocalDateTime fireDate = date.minusDays(7);
+            if (!fireDate.isBefore(LocalDateTime.now())) {
+                Trigger trigger = buildJobTrigger(jobDetail, date.toInstant(ZoneOffset.UTC));
+                scheduler.scheduleJob(trigger);
+            } else {
+                scheduler.triggerJob(JobKey.jobKey(jobKey));
+            }
         } catch (SchedulerException ex) {
             log.error("Failed to schedule email job", ex);
             return;
