@@ -49,21 +49,6 @@ public final class GlobalExceptionHandler extends ResponseEntityExceptionHandler
         return new ResponseEntity<>(errorResponse, new HttpHeaders(), status);
     }
 
-    @Override
-    protected ResponseEntity<Object> handleHttpMessageNotReadable(@NonNull HttpMessageNotReadableException ex, @NonNull HttpHeaders headers, @NonNull HttpStatus status, @NonNull WebRequest request) {
-        return handleValidationError(ex);
-    }
-
-    @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(@NonNull MethodArgumentNotValidException ex, @NonNull HttpHeaders headers, @NonNull HttpStatus status, @NonNull WebRequest request) {
-        return handleValidationError(ex);
-    }
-
-    @Override
-    protected ResponseEntity<Object> handleBindException(@NonNull BindException ex, @NonNull HttpHeaders headers, @NonNull HttpStatus status, @NonNull WebRequest request) {
-        return handleValidationError(ex);
-    }
-
     @ExceptionHandler
     protected ResponseEntity<Object> anyExceptionHandler(Exception ex, WebRequest request) {
         try {
@@ -74,6 +59,25 @@ public final class GlobalExceptionHandler extends ResponseEntityExceptionHandler
     }
 
     @Override
+    @NonNull
+    protected ResponseEntity<Object> handleHttpMessageNotReadable(@NonNull HttpMessageNotReadableException ex, @NonNull HttpHeaders headers, @NonNull HttpStatus status, @NonNull WebRequest request) {
+        return handleValidationError(ex);
+    }
+
+    @Override
+    @NonNull
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(@NonNull MethodArgumentNotValidException ex, @NonNull HttpHeaders headers, @NonNull HttpStatus status, @NonNull WebRequest request) {
+        return handleValidationError(ex);
+    }
+
+    @Override
+    @NonNull
+    protected ResponseEntity<Object> handleBindException(@NonNull BindException ex, @NonNull HttpHeaders headers, @NonNull HttpStatus status, @NonNull WebRequest request) {
+        return handleValidationError(ex);
+    }
+
+    @Override
+    @NonNull
     protected ResponseEntity<Object> handleExceptionInternal(@NonNull Exception ex, @Nullable Object body, @NonNull HttpHeaders headers, @NonNull HttpStatus status, @NonNull WebRequest request) {
         logger.warn(status.toString(), ex);
         ErrorResponse errorResponse = new ErrorResponse(
