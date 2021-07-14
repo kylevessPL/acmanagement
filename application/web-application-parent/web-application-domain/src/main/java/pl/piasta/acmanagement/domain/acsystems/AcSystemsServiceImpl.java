@@ -15,7 +15,6 @@ import pl.piasta.acmanagement.domain.misc.ErrorCode;
 import pl.piasta.acmanagement.domain.misc.MyException;
 
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.List;
 
 @Service
@@ -39,7 +38,7 @@ public class AcSystemsServiceImpl implements AcSystemsService {
         EmailDetails emailDetails = createEmailDetails(email);
         String jobKey = emailScheduler.add(emailDetails);
         if (system.isNotified()) {
-            emailScheduler.schedule(jobKey, system.getNextMaintainance().toInstant(ZoneOffset.UTC));
+            emailScheduler.schedule(jobKey, system.getNextMaintainance());
         }
         return acSystemsRepository.add(system, jobKey);
     }
@@ -81,7 +80,7 @@ public class AcSystemsServiceImpl implements AcSystemsService {
     private void scheduleEmail(JobDetails jobDetails) {
         LocalDateTime date = jobDetails.getNextMaintainance();
         if (jobDetails.isNotified() && date.isBefore(LocalDateTime.now())) {
-            emailScheduler.schedule(jobDetails.getJobKey(), date.toInstant(ZoneOffset.UTC));
+            emailScheduler.schedule(jobDetails.getJobKey(), date);
         } else {
             emailScheduler.unschedule(jobDetails.getJobKey());
         }

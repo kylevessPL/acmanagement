@@ -15,7 +15,6 @@
     <version>1.0</version>
     <modules>
         <module>web-application-parent</module>
-        <module>application-dto</module>
     </modules>
     <name>Air conditioning system management parent module</name>
     <properties>
@@ -28,7 +27,7 @@
         <dependencies>
             <dependency>
                 <groupId>pl.piasta.acmanagement</groupId>
-                <artifactId>application-dto</artifactId>
+                <artifactId>web-application-dto</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
