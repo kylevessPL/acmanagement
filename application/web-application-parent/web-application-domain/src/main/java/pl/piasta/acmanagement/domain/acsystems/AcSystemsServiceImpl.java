@@ -38,7 +38,7 @@ public class AcSystemsServiceImpl implements AcSystemsService {
         EmailDetails emailDetails = createEmailDetails(email);
         String jobKey = emailScheduler.add(emailDetails);
         if (system.isNotified()) {
-            emailScheduler.schedule(jobKey, system.getNextMaintainance());
+            emailScheduler.schedule(jobKey, system.getNextMaintainance().minusDays(7));
         }
         return acSystemsRepository.add(system, jobKey);
     }
@@ -80,7 +80,7 @@ public class AcSystemsServiceImpl implements AcSystemsService {
     private void scheduleEmail(JobDetails jobDetails) {
         LocalDateTime date = jobDetails.getNextMaintainance();
         if (jobDetails.isNotified() && date.isBefore(LocalDateTime.now())) {
-            emailScheduler.schedule(jobDetails.getJobKey(), date);
+            emailScheduler.schedule(jobDetails.getJobKey(), date.minusDays(7));
         } else {
             emailScheduler.unschedule(jobDetails.getJobKey());
         }

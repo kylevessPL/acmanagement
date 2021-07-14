@@ -45,8 +45,7 @@ public class EmailScheduler {
                 scheduler.unscheduleJob(TriggerKey.triggerKey(jobKey, "triggers"));
             }
             JobDetail jobDetail = scheduler.getJobDetail(JobKey.jobKey(jobKey, "jobs"));
-            LocalDateTime fireDate = date.minusDays(7);
-            if (!fireDate.isBefore(LocalDateTime.now())) {
+            if (!date.isBefore(LocalDateTime.now())) {
                 Trigger trigger = buildJobTrigger(jobDetail, date.toInstant(ZoneOffset.UTC));
                 scheduler.scheduleJob(trigger);
             } else {
